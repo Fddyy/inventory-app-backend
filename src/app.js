@@ -5,6 +5,7 @@ const app = express();
 
 // import routes
 const userRoute = require('./routes/userRoute');
+const barangRoute = require('./routes/barangRoute');
 
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // routes
-app.use('/', userRoute);
+app.use('/login', userRoute);
+app.use('/barang', barangRoute)
 
 module.exports = app;

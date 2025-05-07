@@ -1,0 +1,76 @@
+const barangModel = require('../models/barangModel');
+
+// Mendapatkan semua barang
+exports.getAllBarang = async (req, res) => {
+  try {
+    const barang = await barangModel.getAll();
+    res.status(200).json(barang);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data barang.' });
+  }
+};
+
+// Mendapatkan barang berdasarkan ID
+exports.getBarangById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const barang = await barangModel.getById(id);
+    if (!barang) {
+      return res.status(404).json({ message: 'Barang tidak ditemukan.' });
+    }
+    res.status(200).json(barang);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data barang.' });
+  }
+};
+
+// Menambahkan barang baru
+exports.createBarang = async (req, res) => {
+  const { nama, deskripsi, stok, gambar, harga } = req.body;
+  
+  if (!nama || !stok || !gambar || !harga) {
+    return res.status(400).json({ message: 'Nama, stok, dan gambar harus diisi.' });
+  }
+
+  try {
+    const data = { nama, deskripsi, stok, gambar, harga };
+    await barangModel.create(data);
+    res.status(201).json({ message: 'Barang berhasil ditambahkan.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan barang.' });
+  }
+};
+
+// Mengupdate barang berdasarkan ID
+exports.updateBarang = async (req, res) => {
+  const { id } = req.params;
+  const { nama, deskripsi, stok, gambar, harga } = req.body;
+
+  if (!nama || !stok || !gambar || !harga) {
+    return res.status(400).json({ message: 'Nama, stok, harga, dan gambar harus diisi.' });
+  }
+
+  try {
+    const data = { nama, deskripsi, stok, gambar, harga };
+    await barangModel.update(id, data);
+    res.status(200).json({ message: 'Barang berhasil diperbarui.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat memperbarui barang.' });
+  }
+};
+
+// Menghapus barang berdasarkan ID
+exports.deleteBarang = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await barangModel.delete(id);
+    res.status(200).json({ message: 'Barang berhasil dihapus.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat menghapus barang.' });
+  }
+};
