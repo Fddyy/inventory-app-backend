@@ -14,19 +14,19 @@ exports.getById = async (id) => {
 
 // Create new barang
 exports.create = async (data) => {
-  const { nama, deskripsi, stok, gambar,harga } = data;
+  const { nama, deskripsi, stok, gambar, harga, kategori } = data;
   await db.execute(
-    'INSERT INTO barang (nama, deskripsi, stok, gambar, harga) VALUES (?, ?, ?, ?, ?)',
-    [nama, deskripsi, stok, gambar,harga]
+    'INSERT INTO barang (nama, deskripsi, stok, gambar, harga, kategori) VALUES (?, ?, ?, ?, ?, ?)',
+    [nama, deskripsi, stok, gambar, harga, kategori]
   );
 };
 
 // Update barang by ID
 exports.update = async (id, data) => {
-  const { nama, deskripsi, stok, gambar, harga } = data;
+  const { nama, deskripsi, stok, gambar, harga, kategori } = data;
   await db.execute(
-    'UPDATE barang SET nama = ?, deskripsi = ?, stok = ?, gambar = ?, harga = ? WHERE id = ?',
-    [nama, deskripsi, stok, gambar,harga ,id]
+    'UPDATE barang SET nama = ?, deskripsi = ?, stok = ?, gambar = ?, harga = ?, kategori = ? WHERE id = ?',
+    [nama, deskripsi, stok, gambar, harga, kategori, id]
   );
 };
 

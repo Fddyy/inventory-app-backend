@@ -6,6 +6,7 @@ const app = express();
 // import routes
 const userRoute = require('./routes/userRoute');
 const barangRoute = require('./routes/barangRoute');
+const transaksiRoute = require('./routes/transaksiRoute')
 
 require("dotenv").config();
 
@@ -17,5 +18,6 @@ app.use(cookieParser());
 // routes
 app.use('/login', userRoute);
 app.use('/barang', barangRoute)
+app.use('/transaksi', transaksiRoute)
 
 module.exports = app;

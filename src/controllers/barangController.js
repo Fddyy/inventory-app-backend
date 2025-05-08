@@ -28,14 +28,14 @@ exports.getBarangById = async (req, res) => {
 
 // Menambahkan barang baru
 exports.createBarang = async (req, res) => {
-  const { nama, deskripsi, stok, gambar, harga } = req.body;
+  const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
   
   if (!nama || !stok || !gambar || !harga) {
     return res.status(400).json({ message: 'Nama, stok, dan gambar harus diisi.' });
   }
 
   try {
-    const data = { nama, deskripsi, stok, gambar, harga };
+    const data = { nama, deskripsi, stok, gambar, harga, kategori };
     await barangModel.create(data);
     res.status(201).json({ message: 'Barang berhasil ditambahkan.' });
   } catch (error) {
@@ -47,14 +47,14 @@ exports.createBarang = async (req, res) => {
 // Mengupdate barang berdasarkan ID
 exports.updateBarang = async (req, res) => {
   const { id } = req.params;
-  const { nama, deskripsi, stok, gambar, harga } = req.body;
+  const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
 
   if (!nama || !stok || !gambar || !harga) {
     return res.status(400).json({ message: 'Nama, stok, harga, dan gambar harus diisi.' });
   }
 
   try {
-    const data = { nama, deskripsi, stok, gambar, harga };
+    const data = { nama, deskripsi, stok, gambar, harga, kategori };
     await barangModel.update(id, data);
     res.status(200).json({ message: 'Barang berhasil diperbarui.' });
   } catch (error) {
