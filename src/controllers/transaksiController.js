@@ -14,6 +14,7 @@ exports.createTransaksi = async (req, res) => {
 
     // Hitung total harga
     const total = detail.reduce((acc, item) => acc + (item.harga * item.jumlah), 0);
+    //console.log(detail)
 
     const transaksiId = await transaksiModel.create({ jenis, keterangan, total }, detail);
     res.status(201).json({ message: 'Transaksi berhasil dibuat', transaksiId });

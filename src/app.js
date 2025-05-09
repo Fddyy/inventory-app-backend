@@ -16,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // routes
-app.use('/login', userRoute);
+app.use('/', userRoute);
 app.use('/barang', barangRoute)
 app.use('/transaksi', transaksiRoute)
+app.use('/', userRoute)
 
 module.exports = app;

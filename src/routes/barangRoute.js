@@ -1,20 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const barangController = require('../controllers/barangController');
+const authMiddleware = require('../middlewares/authMiddleware')
 
 // Mengambil semua barang
-router.get('/', barangController.getAllBarang);
+router.get('/',authMiddleware, barangController.getAllBarang);
 
 // Mengambil barang berdasarkan ID
-router.get('/:id', barangController.getBarangById);
+router.get('/:id',authMiddleware, barangController.getBarangById);
 
 // Menambahkan barang baru
-router.post('/', barangController.createBarang);
+router.post('/',authMiddleware, barangController.createBarang);
 
 // Mengupdate barang berdasarkan ID
-router.put('/:id', barangController.updateBarang);
+router.put('/:id',authMiddleware,barangController.updateBarang);
 
 // Menghapus barang berdasarkan ID
-router.delete('/:id', barangController.deleteBarang);
+router.delete('/:id',authMiddleware,barangController.deleteBarang);
 
 module.exports = router;
