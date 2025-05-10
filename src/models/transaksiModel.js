@@ -66,3 +66,67 @@ exports.create = async (transaksiData, detailItems) => {
 exports.delete = async (id) => {
   await db.query('DELETE FROM transaksi WHERE id = ?', [id]);
 };
+
+// export seluruh transaksi
+exports.exportTransaksi = async () => {
+const [rows] = await db.execute(`
+      SELECT 
+        t.id AS transaksi_id,
+        t.jenis,
+        t.keterangan,
+        t.created_at,
+        t.total,
+        b.nama AS nama_barang,
+        td.jumlah,
+        td.harga
+      FROM transaksi t
+      JOIN transaksi_detail td ON t.id = td.transaksi_id
+      JOIN barang b ON td.barang_id = b.id
+      ORDER BY t.created_at DESC
+    `);
+
+    return rows
+}
+
+//export transaksi masuk
+exports.exportTransaksiMasuk = async () => {
+const [rows] = await db.execute(`
+      SELECT 
+        t.id AS transaksi_id,
+        t.jenis,
+        t.keterangan,
+        t.created_at,
+        t.total,
+        b.nama AS nama_barang,
+        td.jumlah,
+        td.harga
+      FROM transaksi t
+      JOIN transaksi_detail td ON t.id = td.transaksi_id
+      JOIN barang b ON td.barang_id = b.id
+      WHERE t.jenis = 'masuk'
+      ORDER BY t.created_at DESC
+    `);
+    
+    return rows
+}
+//export transaksi keluar
+exports.exportTransaksiKeluar = async () => {
+const [rows] = await db.execute(`
+      SELECT 
+        t.id AS transaksi_id,
+        t.jenis,
+        t.keterangan,
+        t.created_at,
+        t.total,
+        b.nama AS nama_barang,
+        td.jumlah,
+        td.harga
+      FROM transaksi t
+      JOIN transaksi_detail td ON t.id = td.transaksi_id
+      JOIN barang b ON td.barang_id = b.id
+      WHERE t.jenis = 'keluar'
+      ORDER BY t.created_at DESC
+    `);
+
+    return rows
+}

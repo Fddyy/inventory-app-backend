@@ -9,6 +9,10 @@ const barangRoute = require('./routes/barangRoute');
 const searchRoute = require('./routes/searchRoute')
 const transaksiRoute = require('./routes/transaksiRoute')
 const dashboardRoutes = require('./routes/dashboardRoute');
+const exportBarangExcelRoute = require('./routes/exportBarangExcelRoute')
+const exportTransaksiExcelRoute = require('./routes/exportTransaksiExcelRoute')
+const exportTransaksiMasukRoute = require('./routes/exportTransaksiMasukRoute')
+const exportTransaksiKeluarRoute = require('./routes/exportTransaksiKeluarRoute')
 
 require("dotenv").config();
 
@@ -23,6 +27,10 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/search', searchRoute)
 app.use('/barang', barangRoute)
 app.use('/transaksi', transaksiRoute)
+app.use('/export/barang', exportBarangExcelRoute)
+app.use('/export/transaksi', exportTransaksiExcelRoute)
+app.use('/export/transaksi-masuk', exportTransaksiMasukRoute)
+app.use('/export/transaksi-keluar', exportTransaksiKeluarRoute)
 app.use('/', userRoute)
 
 
