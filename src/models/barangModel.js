@@ -34,3 +34,12 @@ exports.update = async (id, data) => {
 exports.delete = async (id) => {
   await db.query('DELETE FROM barang WHERE id = ?', [id]);
 };
+
+//pencarian barang berdasasrkan nama scr realtime
+exports.searchByName = async (keyword) => {
+  const [rows] = await db.query(
+    `SELECT id, nama, harga, stok FROM barang WHERE nama LIKE ? LIMIT 10`,
+    [`%${keyword}%`]
+  );
+  return rows;
+};

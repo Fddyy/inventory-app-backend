@@ -7,7 +7,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.get('/', authMiddleware,transaksiController.getAllTransaksi);
 
 // Mendapatkan transaksi berdasarkan ID
-router.get('/:id', authMiddleware,transaksiController.getTransaksiById);
+router.get('/detail/:id', authMiddleware,transaksiController.getTransaksiById);
 
 // Membuat transaksi baru
 router.post('/', authMiddleware,transaksiController.createTransaksi);

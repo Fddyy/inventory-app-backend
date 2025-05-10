@@ -6,6 +6,7 @@ const app = express();
 // import routes
 const userRoute = require('./routes/userRoute');
 const barangRoute = require('./routes/barangRoute');
+const searchRoute = require('./routes/searchRoute')
 const transaksiRoute = require('./routes/transaksiRoute')
 const dashboardRoutes = require('./routes/dashboardRoute');
 
@@ -19,8 +20,10 @@ app.use(cookieParser());
 // routes
 app.use('/', userRoute);
 app.use('/dashboard', dashboardRoutes);
+app.use('/search', searchRoute)
 app.use('/barang', barangRoute)
 app.use('/transaksi', transaksiRoute)
 app.use('/', userRoute)
+
 
 module.exports = app;

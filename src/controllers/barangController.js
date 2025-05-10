@@ -74,3 +74,29 @@ exports.deleteBarang = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan saat menghapus barang.' });
   }
 };
+
+
+//pencarian barang berdasarkan naama scr realtime
+exports.searchBarang = async (req, res) => {
+  const keyword = req.query.keyword;
+  // console.log('keyword' + keyword)
+
+  if (!keyword) {
+    return res.status(400).json({ message: 'Keyword harus diisi' });
+  }
+
+  try {
+    const results = await barangModel.searchByName(keyword);
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Tidak ada barang yang cocok' });
+    }
+
+    res.json(results);
+    // console.log('Hasil pencarian:', results);
+  } catch (error) {
+    console.error('Gagal mencari barang:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mencari barang' });
+  }
+};
+
