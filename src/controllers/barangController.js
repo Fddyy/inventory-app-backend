@@ -1,4 +1,6 @@
 const barangModel = require('../models/barangModel');
+const QRCode = require('qrcode');
+const formatRupiah = require('../utils/formatRupiah');
 
 // Mendapatkan semua barang
 exports.getAllBarang = async (req, res) => {
@@ -26,23 +28,49 @@ exports.getBarangById = async (req, res) => {
   }
 };
 
+
+
+
 // Menambahkan barang baru
 exports.createBarang = async (req, res) => {
   const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
   
-  if (!nama || !stok || !gambar || !harga) {
-    return res.status(400).json({ message: 'Nama, stok, dan gambar harus diisi.' });
+  if (!nama || !stok || !harga || !kategori) {
+    return res.status(400).json({ message: 'Nama, stok, dan kategori harus diisi.' });
   }
 
   try {
     const data = { nama, deskripsi, stok, gambar, harga, kategori };
-    await barangModel.create(data);
-    res.status(201).json({ message: 'Barang berhasil ditambahkan.' });
+    const result = await barangModel.create(data);
+    // console.log(result)
+
+    //fungsi membuat qrcode
+    const barangId = result.insertId;
+    const barang = await barangModel.getById(barangId);
+
+     const qrText = 
+    `-Toko Nurlinda-
+    ID Barang: ${barang.id}
+    Nama Barang: ${barang.nama}
+    Harga Barang: ${formatRupiah(barang.harga)}
+    Dibuat: ${barang.created_at}`;
+
+    const qrImageData = await QRCode.toDataURL(qrText);
+
+    res.status(201).json({
+      message: 'Barang berhasil ditambahkan.',
+      qrCode: qrImageData,
+    })
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Terjadi kesalahan saat menambahkan barang.' });
   }
 };
+
+
+
+
 
 // Mengupdate barang berdasarkan ID
 exports.updateBarang = async (req, res) => {

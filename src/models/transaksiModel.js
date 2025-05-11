@@ -67,7 +67,8 @@ exports.delete = async (id) => {
   await db.query('DELETE FROM transaksi WHERE id = ?', [id]);
 };
 
-// export seluruh transaksi
+
+// export seluruh transaksi ke exel
 exports.exportTransaksi = async () => {
 const [rows] = await db.execute(`
       SELECT 
@@ -88,7 +89,8 @@ const [rows] = await db.execute(`
     return rows
 }
 
-//export transaksi masuk
+
+//export transaksi masuk ke exel
 exports.exportTransaksiMasuk = async () => {
 const [rows] = await db.execute(`
       SELECT 
@@ -109,7 +111,9 @@ const [rows] = await db.execute(`
     
     return rows
 }
-//export transaksi keluar
+
+
+//export transaksi keluar ke exel
 exports.exportTransaksiKeluar = async () => {
 const [rows] = await db.execute(`
       SELECT 

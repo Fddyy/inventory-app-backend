@@ -14,11 +14,11 @@ exports.getById = async (id) => {
 
 // Create new barang
 exports.create = async (data) => {
-  const { nama, deskripsi, stok, gambar, harga, kategori } = data;
-  await db.execute(
-    'INSERT INTO barang (nama, deskripsi, stok, gambar, harga, kategori) VALUES (?, ?, ?, ?, ?, ?)',
-    [nama, deskripsi, stok, gambar, harga, kategori]
+  const { nama, deskripsi, stok, harga, kategori } = data;
+  const query = 'INSERT INTO barang (nama, deskripsi, stok, harga, kategori) VALUES (?, ?, ?, ?, ?)'
+  const [result] = await db.execute(query,[nama, deskripsi, stok, harga, kategori]
   );
+  return result
 };
 
 // Update barang by ID

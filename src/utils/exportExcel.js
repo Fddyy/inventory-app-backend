@@ -1,9 +1,8 @@
-// controllers/exportController.js
 const ExcelJS = require('exceljs');
 const barangModel = require('../models/barangModel');
 const transaksiModel = require('../models/transaksiModel');
 
-//export barang
+//export barang ke excel
 exports.exportBarangToExcel = async (req, res) => {
   try {
     const barangList = await barangModel.getAll();
@@ -87,7 +86,8 @@ exports.exportTransaksiToExcel = async (req, res) => {
   }
 };
 
-//export transaksi masuk ke excel
+
+//export transaksi-masuk ke excel
 exports.exportTransaksiMasukToExcel = async (req, res) => {
   
     try {
@@ -131,7 +131,7 @@ exports.exportTransaksiMasukToExcel = async (req, res) => {
   }
 };
 
-//export transaksi keluar keexcel
+//export transaksi-keluar keexcel
 exports.exportTransaksiKeluarToExcel = async (req, res) => {
   
     try {
