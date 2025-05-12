@@ -2,7 +2,7 @@ const barangModel = require('../models/barangModel');
 const QRCode = require('qrcode');
 const formatRupiah = require('../utils/formatRupiah');
 
-// Mendapatkan semua barang
+
 exports.getAllBarang = async (req, res) => {
   try {
     const barang = await barangModel.getAll();
@@ -13,7 +13,7 @@ exports.getAllBarang = async (req, res) => {
   }
 };
 
-// Mendapatkan barang berdasarkan ID
+
 exports.getBarangById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -40,6 +40,12 @@ exports.createBarang = async (req, res) => {
   }
 
   try {
+
+    const existing = await barangModel.getByNama(nama);
+    if (existing.length > 0) {
+      return res.status(400).json({ message: 'Nama barang sudah digunakan.' });
+    }
+
     const data = { nama, deskripsi, stok, gambar, harga, kategori };
     const result = await barangModel.create(data);
     // console.log(result)
@@ -50,16 +56,14 @@ exports.createBarang = async (req, res) => {
 
      const qrText = 
     `-Toko Nurlinda-
-    ID Barang: ${barang.id}
-    Nama Barang: ${barang.nama}
-    Harga Barang: ${formatRupiah(barang.harga)}
-    Dibuat: ${barang.created_at}`;
+    ID: ${barang.id}
+    Harga: ${formatRupiah(barang.harga)}`;
 
     const qrImageData = await QRCode.toDataURL(qrText);
-
+   
     res.status(201).json({
       message: 'Barang berhasil ditambahkan.',
-      qrCode: qrImageData,
+      qrCode: qrImageData
     })
 
   } catch (error) {

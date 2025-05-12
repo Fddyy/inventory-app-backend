@@ -12,17 +12,19 @@ exports.createTransaksi = async (req, res) => {
       return res.status(400).json({ message: 'Detail transaksi harus diisi' });
     }
 
-    // Hitung total harga
     const total = detail.reduce((acc, item) => acc + (item.harga * item.jumlah), 0);
     //console.log(detail)
 
     const transaksiId = await transaksiModel.create({ jenis, keterangan, total }, detail);
+
     res.status(201).json({ message: 'Transaksi berhasil dibuat', transaksiId });
   } catch (error) {
     console.error('Gagal membuat transaksi:', error);
     res.status(500).json({ message: 'Terjadi kesalahan saat membuat transaksi' });
   }
 };
+
+
 
 exports.getAllTransaksi = async (req, res) => {
   try {

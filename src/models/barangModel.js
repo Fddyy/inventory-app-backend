@@ -12,6 +12,12 @@ exports.getById = async (id) => {
   return rows[0];
 };
 
+exports.getByNama = async (nama) => {
+  const [rows] = await db.execute('SELECT * FROM barang WHERE nama = ?', [nama]);
+  return rows;
+};
+
+
 // Create new barang
 exports.create = async (data) => {
   const { nama, deskripsi, stok, harga, kategori } = data;

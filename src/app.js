@@ -16,7 +16,10 @@ const exportTransaksiKeluarRoute = require('./routes/exportTransaksiKeluarRoute'
 
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5500',
+  credentials: true             
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
