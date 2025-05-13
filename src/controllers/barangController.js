@@ -56,7 +56,7 @@ exports.createBarang = async (req, res) => {
 
      const qrText = 
     `-Toko Nurlinda-
-    ID: ${barang.id}
+    Id: ${barang.id}
     Harga: ${formatRupiah(barang.harga)}`;
 
     const qrImageData = await QRCode.toDataURL(qrText);
@@ -131,4 +131,29 @@ exports.searchBarang = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan saat mencari barang' });
   }
 };
+
+
+//fungsi endpoint generate qrcode
+exports.generateQR = async (req, res) =>{
+    const id = req.params.id;
+    try {
+      const barang = await barangModel.getById(id);
+      
+      const data = 
+      `-LA Store-
+      Id: ${barang.id}
+      Harga: ${formatRupiah(barang.harga)} 
+      `
+      const qrCode = await QRCode.toBuffer(data)
+
+      res.setHeader('Content-Disposition', `attachment; filename=barang-${barang.id}.png`)
+      res.setHeader('Content-Type', 'image/png')
+      res.send(qrCode)
+
+    }catch (err) {
+      console.error(err)
+      res.status(500).json({message: 'Gagal generate qrcode'})
+    }
+
+}
 
