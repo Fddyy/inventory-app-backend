@@ -74,8 +74,6 @@ exports.createBarang = async (req, res) => {
 
 
 
-
-
 // Mengupdate barang berdasarkan ID
 exports.updateBarang = async (req, res) => {
   const { id } = req.params;

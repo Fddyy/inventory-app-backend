@@ -36,7 +36,6 @@ app.use('/export/transaksi', exportTransaksiExcelRoute)
 app.use('/export/transaksi-masuk', exportTransaksiMasukRoute)
 app.use('/export/transaksi-keluar', exportTransaksiKeluarRoute)
 app.use('/cetak-qr', cetakQRroute)
-app.use('/', userRoute)
 
 
 module.exports = app;

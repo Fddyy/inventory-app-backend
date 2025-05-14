@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
       maxAge: 60 * 60 * 1000
     });
 
-    res.json({ message: 'Login berhasil', token });
+    res.status(200).json({ message: 'Login berhasil', token });
   } catch (error) {
     res.status(500).json({ message: 'Terjadi kesalahan', error: error.message });
   }
