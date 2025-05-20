@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 // Mendapatkan semua transaksi
 exports.getAll = async () => {
-  const [rows] = await db.query('SELECT * FROM transaksi ORDER BY created_at DESC');
+  const [rows] = await db.query('SELECT * FROM transaksi ORDER BY created_at DESC LIMIT 25');
   return rows;
 };
 
@@ -37,20 +37,49 @@ exports.create = async (transaksiData, detailItems) => {
     );
     const transaksiId = transaksiResult.insertId;
 
-    for (const item of detailItems) {
-      const { barang_id, jumlah, harga } = item;
-      await conn.query(
-        'INSERT INTO transaksi_detail (transaksi_id, barang_id, jumlah, harga) VALUES (?, ?, ?, ?)',
-        [transaksiId, barang_id, jumlah, harga]
-      );
+    //LOGIKA TRANSAKSI LAMA
+    // for (const item of detailItems) {
+    //   const { barang_id, jumlah, harga } = item;
+    //   await conn.query(
+    //     'INSERT INTO transaksi_detail (transaksi_id, barang_id, jumlah, harga) VALUES (?, ?, ?, ?)',
+    //     [transaksiId, barang_id, jumlah, harga]
+    //   );
 
-      // Update stok barang
-      if (jenis === 'masuk') {
-        await conn.query('UPDATE barang SET stok = stok + ? WHERE id = ?', [jumlah, barang_id]);
-      } else if (jenis === 'keluar') {
-        await conn.query('UPDATE barang SET stok = stok - ? WHERE id = ?', [jumlah, barang_id]);
-      }
+    //   // Update stok barang
+    //   if (jenis === 'masuk') {
+    //     await conn.query('UPDATE barang SET stok = stok + ? WHERE id = ?', [jumlah, barang_id]);
+    //   } else if (jenis === 'keluar') {
+    //     await conn.query('UPDATE barang SET stok = stok - ? WHERE id = ?', [jumlah, barang_id]);
+    //   }
+    // }
+
+    //LOGIKA TRANSAKSI BARU
+    for (const item of detailItems) {
+  const { barang_id, jumlah, harga } = item;
+
+  // 1. Jika keluar, cek stok dulu
+  if (jenis === 'keluar') {
+    const [[barang]] = await conn.query('SELECT stok FROM barang WHERE id = ?', [barang_id]);
+    if (!barang) throw new Error(`Barang dengan ID ${barang_id} tidak ditemukan`);
+    if (barang.stok < jumlah) {
+      throw new Error(`Stok tidak mencukupi untuk barang ID ${barang_id}`);
     }
+  }
+
+  // 2. Simpan detail transaksi
+  await conn.query(
+    'INSERT INTO transaksi_detail (transaksi_id, barang_id, jumlah, harga) VALUES (?, ?, ?, ?)',
+    [transaksiId, barang_id, jumlah, harga]
+  );
+
+  // 3. Update stok
+  if (jenis === 'masuk') {
+    await conn.query('UPDATE barang SET stok = stok + ? WHERE id = ?', [jumlah, barang_id]);
+  } else if (jenis === 'keluar') {
+    await conn.query('UPDATE barang SET stok = stok - ? WHERE id = ?', [jumlah, barang_id]);
+  }
+}
+
 
     await conn.commit();
     return transaksiId;

@@ -44,7 +44,7 @@ exports.delete = async (id) => {
 //pencarian barang berdasasrkan nama scr realtime
 exports.searchByName = async (keyword) => {
   const [rows] = await db.query(
-    `SELECT id, nama, harga, stok FROM barang WHERE nama LIKE ? LIMIT 10`,
+    `SELECT * FROM barang WHERE nama LIKE ? LIMIT 10`,
     [`%${keyword}%`]
   );
   return rows;
