@@ -138,14 +138,12 @@ exports.generateQR = async (req, res) =>{
       const barang = await barangModel.getById(id);
       
       const qrText = 
-      `-LA Store-
-      Id: ${barang.id}
-      Harga: ${formatRupiah(barang.harga)} 
-      `
+`Id:${barang.id}
+Harga:${formatRupiah(barang.harga)}`
       const qrImageData = await QRCode.toDataURL(qrText);
    
     res.status(201).json({
-      message: 'Barang berhasil ditambahkan.',
+      message: 'QR Code Berhasil di generate.',
       qrCode: qrImageData
     })
 
