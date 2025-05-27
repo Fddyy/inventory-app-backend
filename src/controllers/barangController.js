@@ -55,9 +55,8 @@ exports.createBarang = async (req, res) => {
     const barang = await barangModel.getById(barangId);
 
      const qrText = 
-    `-Toko Nurlinda-
-    Id: ${barang.id}
-    Harga: ${formatRupiah(barang.harga)}`;
+`Id:${barang.id}
+Harga:${formatRupiah(barang.harga)}`
 
     const qrImageData = await QRCode.toDataURL(qrText);
    
