@@ -19,14 +19,14 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Password salah' });
     }
 
-    const token = jwt.sign({ userId: user.id, nama: user.nama }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, nama: user.nama }, process.env.JWT_SECRET, { expiresIn: '15h' });
     
     //menyimpan token ke cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
-      maxAge: 18 * 60 * 60 * 1000 //18 jam
+      maxAge: 15 * 60 * 60 * 1000
     });
 
     res.status(200).json({ message: 'Login berhasil', token });
