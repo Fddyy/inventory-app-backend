@@ -13,6 +13,16 @@ exports.getAllBarang = async (req, res) => {
   }
 };
 
+exports.getNewBarang = async (req, res) => {
+  try {
+    const barang = await barangModel.getNew();
+    res.status(200).json(barang);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data barang.' });
+  }
+};
+
 
 exports.getBarangById = async (req, res) => {
   const { id } = req.params;
@@ -27,8 +37,6 @@ exports.getBarangById = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data barang.' });
   }
 };
-
-
 
 
 // Menambahkan barang baru

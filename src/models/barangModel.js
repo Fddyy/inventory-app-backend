@@ -1,8 +1,13 @@
 const db = require('../config/db');
 
 // Get all barang
-exports.getAll = async () => {
+exports.getNew = async () => {
   const [rows] = await db.query('SELECT * FROM barang ORDER BY created_at DESC LIMIT 50');
+  return rows;
+};
+
+exports.getAll = async () => {
+  const [rows] = await db.query('SELECT * FROM barang');
   return rows;
 };
 

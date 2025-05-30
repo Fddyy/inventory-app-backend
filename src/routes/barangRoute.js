@@ -5,6 +5,8 @@ const authMiddleware = require('../middlewares/authMiddleware')
 
 router.get('/',authMiddleware, barangController.getAllBarang);
 
+router.get('/new',authMiddleware, barangController.getNewBarang);
+
 router.get('/:id',authMiddleware, barangController.getBarangById);
 
 router.post('/',authMiddleware, barangController.createBarang);
