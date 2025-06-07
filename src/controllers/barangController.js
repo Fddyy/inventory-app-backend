@@ -62,9 +62,7 @@ exports.createBarang = async (req, res) => {
     const barangId = result.insertId;
     const barang = await barangModel.getById(barangId);
 
-     const qrText = 
-`Id:${barang.id}
-Harga:${formatRupiah(barang.harga)}`
+     const qrText =`Id:${barang.id}`
 
     const qrImageData = await QRCode.toDataURL(qrText);
    
@@ -144,9 +142,7 @@ exports.generateQR = async (req, res) =>{
     try {
       const barang = await barangModel.getById(id);
       
-      const qrText = 
-`Id:${barang.id}
-Harga:${formatRupiah(barang.harga)}`
+      const qrText =`Id:${barang.id}`
       const qrImageData = await QRCode.toDataURL(qrText);
    
     res.status(201).json({
