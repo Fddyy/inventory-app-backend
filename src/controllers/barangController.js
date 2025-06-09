@@ -1,7 +1,5 @@
 const barangModel = require('../models/barangModel');
 const QRCode = require('qrcode');
-const formatRupiah = require('../utils/formatRupiah');
-
 
 exports.getAllBarang = async (req, res) => {
   try {
@@ -44,11 +42,10 @@ exports.createBarang = async (req, res) => {
   const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
   
   if (!nama || !stok || !harga || !kategori) {
-    return res.status(400).json({ message: 'Nama, stok, dan kategori harus diisi.' });
+    return res.status(400).json({ message: 'Nama, stok, harga, dan kategori harus diisi.' });
   }
 
   try {
-
     const existing = await barangModel.getByNama(nama);
     if (existing.length > 0) {
       return res.status(400).json({ message: 'Nama barang sudah digunakan.' });
@@ -62,10 +59,10 @@ exports.createBarang = async (req, res) => {
     const barangId = result.insertId;
     const barang = await barangModel.getById(barangId);
 
-     const qrText =`Id:${barang.id}`
+    const qrText =`Id:${barang.id}`
 
     const qrImageData = await QRCode.toDataURL(qrText);
-   
+  
     res.status(201).json({
       message: 'Barang berhasil ditambahkan.',
       qrCode: qrImageData
@@ -77,15 +74,12 @@ exports.createBarang = async (req, res) => {
   }
 };
 
-
-
-// Mengupdate barang berdasarkan ID
 exports.updateBarang = async (req, res) => {
   const { id } = req.params;
   const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
 
-  if (!nama || !stok || !gambar || !harga) {
-    return res.status(400).json({ message: 'Nama, stok, harga, dan gambar harus diisi.' });
+  if (!nama || !stok || !harga || !kategori) {
+    return res.status(400).json({ message: 'Nama, stok, harga, dan kategori harus diisi.' });
   }
 
   try {
