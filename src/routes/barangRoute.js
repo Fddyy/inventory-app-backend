@@ -11,7 +11,7 @@ router.get('/:id',authMiddleware, barangController.getBarangById);
 
 router.post('/',authMiddleware, barangController.createBarang);
 
-router.post('/edit/:id',authMiddleware, barangController.updateBarang);
+router.put('/edit/:id',authMiddleware, barangController.updateBarang);
 
 router.put('/:id',authMiddleware,barangController.updateBarang);
 
