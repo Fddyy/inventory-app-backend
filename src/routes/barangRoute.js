@@ -13,8 +13,6 @@ router.post('/',authMiddleware, barangController.createBarang);
 
 router.put('/edit/:id',authMiddleware, barangController.updateBarang);
 
-router.put('/:id',authMiddleware,barangController.updateBarang);
-
 router.delete('/:id',authMiddleware,barangController.deleteBarang);
 
 module.exports = router;

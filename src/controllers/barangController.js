@@ -78,7 +78,7 @@ exports.updateBarang = async (req, res) => {
   const { id } = req.params;
   const { nama, deskripsi, stok, gambar, harga, kategori } = req.body;
 
-  if (!nama || !stok || !harga || !kategori) {
+  if (!nama || stok == null || !harga || !kategori) {
     return res.status(400).json({ message: 'Nama, stok, harga, dan kategori harus diisi.' });
   }
 
