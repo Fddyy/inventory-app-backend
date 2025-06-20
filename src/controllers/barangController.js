@@ -1,5 +1,4 @@
 const barangModel = require('../models/barangModel');
-const QRCode = require('qrcode');
 
 exports.getAllBarang = async (req, res) => {
   try {

@@ -13,7 +13,7 @@ const exportBarangExcelRoute = require('./routes/exportBarangExcelRoute')
 const exportTransaksiExcelRoute = require('./routes/exportTransaksiExcelRoute')
 const exportTransaksiMasukRoute = require('./routes/exportTransaksiMasukRoute')
 const exportTransaksiKeluarRoute = require('./routes/exportTransaksiKeluarRoute')
-const cetakQRroute = require('./routes/cetakqrRoute')
+const imgUploadRoute = require('./routes/imgUploadRoute');
 
 require("dotenv").config();
 
@@ -35,7 +35,7 @@ app.use('/export/barang', exportBarangExcelRoute)
 app.use('/export/transaksi', exportTransaksiExcelRoute)
 app.use('/export/transaksi-masuk', exportTransaksiMasukRoute)
 app.use('/export/transaksi-keluar', exportTransaksiKeluarRoute)
-app.use('/cetak-qr', cetakQRroute)
+app.use('/upload', imgUploadRoute)
 
 
 module.exports = app;
