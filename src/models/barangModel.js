@@ -30,7 +30,7 @@ exports.create = async (data) => {
     INSERT INTO barang (nama, deskripsi, stok, harga, kategori, gambar)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
-  const [result] = await db.execute(query,[nama, deskripsi, stok, harga, kategori]
+  const [result] = await db.execute(query,[nama, deskripsi, stok, harga, kategori, gambar]
   );
   return result
 };
