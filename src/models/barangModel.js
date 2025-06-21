@@ -25,8 +25,11 @@ exports.getByNama = async (nama) => {
 
 // Create new barang
 exports.create = async (data) => {
-  const { nama, deskripsi, stok, harga, kategori } = data;
-  const query = 'INSERT INTO barang (nama, deskripsi, stok, harga, kategori) VALUES (?, ?, ?, ?, ?)'
+  const { nama, deskripsi, stok, harga, kategori, gambar } = data;
+  const query = `
+    INSERT INTO barang (nama, deskripsi, stok, harga, kategori, gambar)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
   const [result] = await db.execute(query,[nama, deskripsi, stok, harga, kategori]
   );
   return result
